@@ -2,19 +2,19 @@ version: '3.8'
 
 services:
   mysql:
-    image: mysql:latest
+    image: mysql:5.7.12
     container_name: ${PROJECT}_mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "${DB_PORT}:3306"
     volumes:
       - ./mysql-data:/var/lib/mysql
       - ./logs:/var/log/mysql
-    command: --log-output=FILE --general-log=1 --general-log-file=/var/log/mysql/general.log --slow-query-log=1 --slow-query-log-file=/var/log/mysql/slow.log --max_allowed_packet=${max_allowed_packet} --innodb_buffer_pool_size=${buffer_pool_size} --max_connections=${max_connections}
+    command:  --log-output=FILE --general-log=1 --general-log-file=/var/log/mysql/general.log --slow-query-log=1 --slow-query-log-file=/var/log/mysql/slow.log --log-error=/var/log/mysql/error.log --max_allowed_packet=${max_allowed_packet} --innodb_buffer_pool_size=${buffer_pool_size} --max_connections=${max_connections}
     restart: always
 
 volumes:
